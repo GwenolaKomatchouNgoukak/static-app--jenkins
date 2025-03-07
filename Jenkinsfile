@@ -18,8 +18,13 @@ pipeline{
         stage('build'){
             steps{
                 sh 'docker build -t dev-studygroup .'
+                sh 'docker build -t newversion .'
+
                 sh 'docker tag dev-studygroup:latest 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:latest'
+                sh 'docker tag dev-studygroup:latest 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:v1.$BUILD_NUMBER'
+                
                 sh 'docker push 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:latest'
+                sh 'docker push 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:v1.$BUILD_NUMBER'
             }
         }
     }
