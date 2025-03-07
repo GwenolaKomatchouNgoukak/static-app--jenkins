@@ -22,9 +22,16 @@ pipeline{
 
                 sh 'docker tag dev-studygroup:latest 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:latest'
                 sh 'docker tag dev-studygroup:latest 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:v1.$BUILD_NUMBER'
-                
+
                 sh 'docker push 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:latest'
                 sh 'docker push 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:v1.$BUILD_NUMBER'
+            }
+        }
+        stage('Testing'){
+            steps{
+                sh 'docker images'
+                sh 'docker run -itd --name web -p 8OOO:80 webapp'
+                sh 'docker ps'
             }
         }
     }
