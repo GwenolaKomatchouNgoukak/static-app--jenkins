@@ -10,10 +10,16 @@ pipeline{
                 sh 'cat file.txt'
             }
         }
+        stage('DockerLogin'){
+            steps{
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 767397795869.dkr.ecr.us-east-1.amazonaws.com'
+            }
+        }
         stage('build'){
             steps{
-                sh 'docker build -t webapp .'
-                sh 'docker images'
+                sh 'docker build -t dev-studygroup .'
+                sh 'docker tag dev-studygroup:latest 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:latest'
+                sh 'docker push 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:latest'
             }
         }
     }
