@@ -1,5 +1,5 @@
 pipeline{
-    agent any
+    agent {'ubuntu-agent'}
     stages{
         stage('CodeScan'){
             steps{
@@ -27,11 +27,20 @@ pipeline{
                 sh 'docker push 767397795869.dkr.ecr.us-east-1.amazonaws.com/dev-studygroup:v1.$BUILD_NUMBER'
             }
         }
+        
         stage('Testing'){
             steps{
                 sh 'docker images'
                 sh 'docker run -itd --name dev-study -p 80:80 webapp'
                 sh 'docker ps'
+            }
+        }
+
+        stage('TestingUbuntu'){
+            steps{
+                sh "python3 --version"
+                sh "docker --version"
+                sh "java --version"
             }
         }
     }
