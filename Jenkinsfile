@@ -6,8 +6,6 @@ pipeline{
                 sh 'touch file.txt'
                 sh 'echo "It works! ">file.txt'
                 sh 'cat file.txt'
-                sh 'trivy fs . -o file.txt'
-                sh 'cat file.txt'
             }
         }
         stage('DockerLogin'){
